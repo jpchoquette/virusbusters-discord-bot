@@ -1,7 +1,8 @@
 const { Client, Intents } = require('discord.js');
 require('dotenv').config();
 
-const token = process.env.BOT_TOKEN;
+// const token = process.env.BOT_TOKEN;
+// console.log('token', token)
 
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -54,4 +55,4 @@ client.on('messageReactionAdd', async (reaction, user) => {
 //   }
 // });
 
-client.login(token);
+client.login(process.env.BOT_TOKEN);
