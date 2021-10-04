@@ -18,30 +18,38 @@ client.on('message', (msg) => {
 
 // Adding reaction-role function
 client.on('messageReactionAdd', async (reaction, user) => {
-  if (reaction.message.partial) await reaction.message.fetch();
-  if (reaction.partial) await reaction.fetch();
-  if (user.bot) return;
-  if (!reaction.message.guild) return;
-  if (reaction.message.channel.id == '894649824090136597') {
-  if (reaction.emoji.name === '🚪') {
-    await reaction.message.guild.members.cache
-      .get(user.id)
-      .roles.add('894641128454914168');
+  try {
+    if (reaction.message.partial) await reaction.message.fetch();
+    if (reaction.partial) await reaction.fetch();
+    if (user.bot) return;
+    if (!reaction.message.guild) return;
+    if (reaction.message.channel.id == '894649824090136597') {
+      if (reaction.emoji.name === '🚪') {
+        await reaction.message.guild.members.cache
+          .get(user.id)
+          .roles.add('894641128454914168');
+      }
+    } else return;
+  } catch (error) {
+    console.error(error);
   }
-} else return;
 });
 
 // Removing reaction roles
-client.on('messageReactionRemove', async (reaction, user) => {
-  if (reaction.message.partial) await reaction.message.fetch();
-  if (reaction.partial) await reaction.fetch();
-  if (user.bot) return;
-  if (!reaction.message.guild) return;
-  if (reaction.message.channel.id == '894649824090136597') {
-    if (reaction.emoji.name === '🚪') {
-      await reaction.message.guild.members.cache
-        .get(user.id)
-        .roles.remove('894641128454914168');
-    }
-  } else return;
-});
+// client.on('messageReactionRemove', async (reaction, user) {
+//   try {
+//     if (reaction.message.partial) await reaction.message.fetch();
+//     if (reaction.partial) await reaction.fetch();
+//     if (user.bot) return;
+//     if (!reaction.message.guild) return;
+//     if (reaction.message.channel.id == '894649824090136597') {
+//       if (reaction.emoji.name === '🚪') {
+//         await reaction.message.guild.members.cache
+//           .get(user.id)
+//           .roles.remove('894641128454914168');
+//       }
+//     } else return;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });
