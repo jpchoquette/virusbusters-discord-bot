@@ -1,15 +1,15 @@
 const { Client, Intents } = require('discord.js');
-require('dotenv').config();
+// require('dotenv').config();
+const { token } = require('./config.json');
 
 // const token = process.env.BOT_TOKEN;
-// console.log('token', token)
 
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
   partials: ['MESSAGE', 'REACTION', 'CHANNEL']
 });
-
-client.on('ready', () => {
+// When the client is ready, run this code (only once)
+client.once('ready', () => {
   console.log('Buster is online');
 });
 
@@ -55,4 +55,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 //   }
 // });
 
-client.login(process.env.BOT_TOKEN);
+// console.log('token', process.env.BOT_TOKEN)
+// client.login(process.env.BOT_TOKEN);
+client.login(token);
