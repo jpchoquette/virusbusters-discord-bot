@@ -10,12 +10,19 @@ const client = new Client({
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
   console.log('Buster is online');
+  // change status of bot
+  client.user.setPresence({
+    status: 'available',
+    activity: {
+        name: 'his employees',
+        type: 'WATCHING'
+    }
+  });
 });
 
 client.on('message', (msg) => {
-  if (msg.content === 'Hello') msg.reply('Hello employee.');
+  if (msg.content === 'Hello Buster') msg.reply('Hello employee.');
+  if (msg.content === 'Hello Boss') msg.reply('Hello employee.');
 });
 
-console.log('token', token)
-// client.login(process.env.BOT_TOKEN);
 client.login(token);
