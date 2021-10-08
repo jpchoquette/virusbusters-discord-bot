@@ -3,7 +3,7 @@ module.exports = {
   description: "Sets up a reaction role message!",
   async execute(message, args, Discord, client) {
     const channel = '894649634776023141';
-    const yellowTeamRole = message.guild.roles.cache.find(role => role.name === 'Verified');
+    const yellowTeamRole = message.guild.roles.cache.find(role => role.name === 'Visitors');
 
     const yellowTeamEmoji = '🆔';
 
