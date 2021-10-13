@@ -13,17 +13,17 @@ const client = new Client({
   partials: ['MESSAGE', 'REACTION', 'CHANNEL']
 });
 
-const prefix = '-';
-const fs = require('fs');
+// const prefix = '-';
+// const fs = require('fs');
 
 client.commands = new Discord.Collection();
-// console.log('Collections', Collection)
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-console.log('commandfiles', commandFiles)
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
-}
+
+// const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
+// console.log('commandfiles', commandFiles)
+// for (const file of commandFiles) {
+//     const command = require(`./commands/${file}`);
+//     client.commands.set(command.name, command);
+// }
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
@@ -41,14 +41,14 @@ client.on('messageCreate', (msg) => {
   if (msg.content.includes('Hello Boss')) msg.reply('Hello employee.');
   if (msg.content === 'Boustan?') msg.reply('Priviet.');
 
-  // Reactions roles
-  if (!msg.content.startsWith(prefix) || msg.author.bot) return;
-
-  const args = msg.content.slice(prefix.length).split(/ +/);
-  const command = args.shift().toLowerCase();
-  if (command === 'reactionrole') {
-    client.commands.get('reactionrole').execute(msg, args, Discord, client);
-  }
+  // Reactions roles NOT USED ANYMORE
+  // if (!msg.content.startsWith(prefix) || msg.author.bot) return;
+  //
+  // const args = msg.content.slice(prefix.length).split(/ +/);
+  // const command = args.shift().toLowerCase();
+  // if (command === 'reactionrole') {
+  //   client.commands.get('reactionrole').execute(msg, args, Discord, client);
+  // }
 });
 
 client.login(token);
