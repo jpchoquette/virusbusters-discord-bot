@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const fetch = require('node-fetch');
 
 const { Client, Intents, Collection, MessageEmbed } = require('discord.js');
 require('dotenv').config();
@@ -28,61 +29,17 @@ for (const file of commandFiles) {
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
   console.log('Buster is online');
-  // change status and activity of bot
-  client.user.setPresence({
-    activities: [{ name: 'his employees', type: 'WATCHING' }],
-    status: 'available'
-  });
   console.log('client', client.user)
+  client.commands.get('sales').execute(Discord, client, fetch);
 });
 
 client.on('messageCreate', (msg) => {
-  if (msg.content.includes('Hello Buster')) msg.reply('Hello employee.');
-  if (msg.content.includes('Hello Boss')) msg.reply('Hello employee.');
-  // if (msg.content === 'Boustan?') msg.reply('Priviet.');
-  if (msg.content.toUpperCase().includes('WORK') && !msg.author.bot){
-    // setTimeout(() => {
-    //   // msg.channel.send('hello' + msg.author.username);
-    //   let embed = new Discord.MessageEmbed()
-    //     .setColor('#e42643')
-    //     .setTitle("Yes " + msg.author.username + '!')
-    //     .setDescription("\n WORK, that's a word I like to hear! \n\n - 𝓑𝓾𝓼𝓽𝓮𝓻 \n 𝒫𝓇𝑒𝓈𝒾𝒹𝑒𝓃𝓉 𝑜𝒻 𝒱𝒾𝓇𝓊𝓈 𝐵𝓊𝓈𝓉𝑒𝓇𝓈");
-    //    msg.channel.send({ embeds: [embed] });
-    // }, 1000)
-    msg.channel.send("WORK, that's a word I like to hear.");
-  }
-
-  if (msg.content === 'Hey Buster') {
-    // msg.reply('Hello employee.');
-    const channel = '893897354439184405';
-    const whitelistEmoji = '🆔';
-
-    // const yellowTeamRole = message.guild.roles.cache.find(role => role.name === 'Visitors');
-    // const yellowTeamEmoji = '🆔';
-    let embed = new Discord.MessageEmbed()
-      .setColor('#e42643')
-      .setTitle('What can I help you with?')
-      .setDescription("\n I want a raise \n\n - Buster");
-     msg.channel.send({ embeds: [embed] });
-
-     messageEmbed.react(whitelistEmoji);
-     client.on('messageReactionAdd', async (reaction, user) => {
-       if (reaction.message.partial) await reaction.message.fetch();
-       if (reaction.partial) await reaction.fetch();
-       if (user.bot) return;
-       if (!reaction.message.guild) return;
-
-       if (reaction.message.channel.id == channel) {
-         if (reaction.emoji.name === whitelistEmoji) {
-           await reaction.message.guild.members.cache.get(user.id).roles.add(yellowTeamRole);
-         }
-         // if (reaction.emoji.name === blueTeamEmoji) {
-         //   await reaction.message.guild.members.cache.get(user.id).roles.add(blueTeamRole);
-         // }
-       } else {
-         return;
-       }
-     });
+  // if (msg.content.includes('Hello Buster')) msg.reply('Hello employee.');
+  // if (msg.content.includes('Hello Boss')) msg.reply('Hello employee.');
+  if (msg.channelId === '947925629448388650') {
+    if (msg.content.toUpperCase().includes('WORK') && !msg.author.bot){
+      msg.channel.send("WORK, that's a word I like to hear.");
+    }
   }
   // Reactions roles NOT USED ANYMORE
   if (!msg.content.startsWith(prefix) || msg.author.bot) return;
@@ -92,9 +49,57 @@ client.on('messageCreate', (msg) => {
   if (command === 'quotes') {
     client.commands.get('quotes').execute(msg, args, Discord, client);
   }
-  // if (command === 'reactionrole') {
-  //   client.commands.get('reactionrole').execute(msg, args, Discord, client);
+  // if (command === 'sales') {
+  //   client.commands.get('sales').execute(msg, Discord, client, fetch);
   // }
 });
 
 client.login(token);
+
+// function fetchSales () {
+//   const query = 'https://wax.api.atomicassets.io/atomicmarket/v1/sales?collection_name=virusbusters&page=1&limit=100&order=desc&sort=created'
+//   fetch(query, {
+//     headers: {
+//       accept: '*/*',
+//       'accept-language': 'en-US,en;q=0.9',
+//       'cache-control': 'no-cache',
+//       'content-type': 'application/json',
+//       pragma: 'no-cache',
+//       'sec-fetch-dest': 'empty',
+//       'sec-fetch-mode': 'cors',
+//       'sec-fetch-site': 'cross-site',
+//       'sec-gpc': '1'
+//     },
+//     referrer: 'https://wax.atomichub.io/',
+//     referrerPolicy: 'strict-origin-when-cross-origin',
+//     body: null,
+//     method: 'GET',
+//     mode: 'cors',
+//     credentials: 'omit'
+//   })
+//     .then(response => response.json())
+//     .then(data => {
+//       console.log('sales', data)
+//       // this.ownedBusterTemplates = data.data
+//       // console.log('data ' + this.type, data)
+//     })
+// }
+// function sales(message, args, Discord, client) {
+//   const channel = '947875738722390156';
+//   fetchSales()
+//   // const quotes = [
+//   //   { message: "When your computer is down, we're the best in town" },
+//   //   { message: "At this rate we'll have more employees than vȉ̸͍̬͇̘̌̇͛̉̃̓̀̋̃͠͝ruses...\n ...just kidding, we would need about 1,000,000 employees." },
+//   //   { message: 'ATH? What is an ATH?? Automatic Treatment Hub??? A new antivirus I never heard about before?' },
+//   //   { message: "Remember: If you're a virus, you're against us." },
+//   //   { message: "And don't forget: If you get a virus, you know to call us." },
+//   //   { message: "S̵̨̰̜̩̙͍̭̻͚͎͕̒̃̎̀̊͑̀̀̉̅̅͑͑̿̕e̸̻̱̯̹̜̻̳̅͗̈́̑̌n̶͈̼̏͐̊̋̄͒̅̈d̶̨̜̮̲̞͔̞̞̮̗́́́̀͗͋̇̆̀͂̍̎͂̚͝ ̷̖̜̱̙̲͇̫̜͓͚̳̙̲́͐͒̓͐̀̍͐͝ĥ̶͖̙̳̼̄̆͘ę̶̡͇͇͍̹͓͓̹̙͙̰̜̦̂l̸̡̳̬͕͔̥͒̌͗̔̀̾́͜p̵̛̘̣̓̏̈́̾͂" }
+//   // ]
+//   // const random = Math.floor(Math.random() * quotes.length)
+//   let embed = new Discord.MessageEmbed()
+//     .setColor('#e42643')
+//     .setTitle('NEW SALE!!!')
+//     .setDescription("\n\n - 𝓑𝓾𝓼𝓽𝓮𝓻 \n 𝒫𝓇𝑒𝓈𝒾𝒹𝑒𝓃𝓉 𝑜𝒻 𝒱𝒾𝓇𝓊𝓈 𝐵𝓊𝓈𝓉𝑒𝓇𝓈");
+//
+//   message.channel.send({ embeds: [embed] });
+// }
